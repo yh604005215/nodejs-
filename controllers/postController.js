@@ -1,6 +1,7 @@
 //帖子的控制器，暴露一系列的中间件方法给到帖子的路由去使用
 //引入 PostModel
 const PostModel = require('../models/postModel');
+
 // 查询帖子列表
 exports.index = async (req, res) => {
     try {
@@ -13,7 +14,6 @@ exports.index = async (req, res) => {
     }
     
 };
-
 
 //创建帖子
 exports.create = async (req, res) => {
