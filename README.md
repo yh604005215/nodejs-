@@ -14,4 +14,4 @@
 
 1. M    model   数据层
 2. V    view    视图层
-3. C    controller 控制层  
+3. C    controller  控制层  
