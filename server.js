@@ -21,7 +21,7 @@ app.use('/posts',postRouter);
 //统一错误处理
 app.use((err, req, res, next) => {
     console.log(err);
-    res.status(500).send('Something broke!');
+    res.status(500).send(err.errmsg);
 })
 
 

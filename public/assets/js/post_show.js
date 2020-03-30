@@ -30,7 +30,7 @@ $(function() {
               <a href="./edit.html" class="nav-link btn btn-link">Edit</a>
             </li>
             <li class="nav-item">
-              <a href="javascript:;" class="nav-link btn btn-link">Delete</a>
+              <a href="javascript:;" class="nav-link btn btn-link delete" id='${data._id}'>Delete</a>
             </li>
           </ul>
         </div>
@@ -38,4 +38,22 @@ $(function() {
       $(".container").html(html);
     }
   });
+
+  $('#posts').on('click','.delete',function (){
+    let url = 'http://localhost:3000/posts/' + $(this).attr('id');
+    $.ajax({
+      type:"delete",
+      url,
+      success: function (res){
+        if(res.code === 0){
+          alert('删除成功');
+          location.href = 'http://localhost:3000/post/index.html';
+        }
+      },
+      error: function (msg){
+        console.log(msg);
+      }
+    })
+  })
+
 });
