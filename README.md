@@ -38,3 +38,19 @@ apidoc -i 写注释的路径/ -o 文档的输出路径
 apidoc -i ./routers -o ./docs
 ```
 5. 访问文档
+
+## 五、重构与改进
+1. 统一的去做错误处理
+在server.js定义一个错误处理的中间件。放在最后
+```javascript
+app.use((err, req, res, next) => {
+    console.log(err.stack);
+    res.status(500).send('Something broke!');
+})
+```
+为了能够处理 async await 产生的异常，还需要去使用一个依赖包 express-async-error
+
+```bash
+    npm install express-async-errors
+```
+在 server.js 中头部引入这个包即可

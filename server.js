@@ -1,6 +1,7 @@
 //引入 express
 const express = require('express');
-
+//引入 express-async-error
+require('express-async-errors');
 //引入抽离出去的路由文件
 const postRouter =  require('./routers/postRouter')
 
@@ -16,6 +17,13 @@ app.use(express.static('./public'));
 
 //调用路由文件，并设置好前缀
 app.use('/posts',postRouter);
+
+//统一错误处理
+app.use((err, req, res, next) => {
+    console.log(err);
+    res.status(500).send('Something broke!');
+})
+
 
 //监听端口，启动服务
 app.listen(3000, ()=>{

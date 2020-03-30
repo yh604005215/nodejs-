@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 //定义连接地址
 const url = 'mongodb://localhost:27017/express';
 
+
 //连接
 mongoose
     .connect(url, { useNewUrlParser : true, useUnifiedTopology: true})
