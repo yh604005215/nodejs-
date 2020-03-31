@@ -24,7 +24,11 @@ $(function() {
       var html = `
         <h1 class="mb-5 font-weight-light">${data.title}</h1>
         <div class="py-4">${data.content}</div>
+        <div class="mt-2 text-black-50">
+        <small>${data.userId.nickname}</small>
+        </div>
         <div class="border-top py-4 mt-4">
+       
           <ul class="nav justify-content-end">
             <li class="nav-item">
               <a href="./edit.html" class="nav-link btn btn-link">Edit</a>
@@ -44,6 +48,10 @@ $(function() {
     $.ajax({
       type:"delete",
       url,
+      //请求头加入token
+      headers: {
+        'Authorization': Cookies.get('token')
+      },
       success: function (res){
         if(res.code === 0){
           alert('删除成功');
