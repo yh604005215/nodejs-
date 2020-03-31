@@ -30,6 +30,7 @@ router.post('/register',register);
  *
  * @apiSuccess {Number} code  错误状态码
  * @apiSuccess {String} msg 错误消息
+ * @apiSuccess {String} token token
 */
 router.post('/login',login);
 

@@ -1,5 +1,5 @@
 const UserModel = require('../models/userModel');
-
+const jsonwebtoken = require('jsonwebtoken');
 
 exports.register = async (req,res) => {
     //获取email
@@ -22,12 +22,18 @@ exports.login = async (req,res) => {
     //查询数据库，email 与 password 能否与数据库中的数据匹配
     const data = await UserModel.findOne({email});
      //校验密码是否正确 bcryptjs
-     
-     
     if(!data || !data.comparePassword(password)) {
         res.send({code: -1, msg:"用户邮箱或密码不正确"});
         return;
     }
     
-    res.send({code: 0, msg: "登录成功", data});
+    //生成token
+    const token =jsonwebtoken.sign({
+        //将一些用户角色信息 用户id、和一些不敏感的信息传入,不要写太多
+        userId:data._id,
+        nickname:data.nickname
+    },"hao",{
+        expiresIn: "2h"
+    });
+    res.send({code: 0, msg: "登录成功", token});
 }

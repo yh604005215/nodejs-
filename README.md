@@ -54,3 +54,6 @@ app.use((err, req, res, next) => {
     npm install express-async-errors
 ```
 在 server.js 中头部引入这个包即可
+
+## 六、 api接口校验
+创建帖子时，必须登录才可以创建。对后端的api接口来说，也就是必须在请求头中携带一个token。

@@ -22,7 +22,7 @@ app.use(userRouter);
 //统一错误处理
 app.use((err, req, res, next) => {
     console.log(err);
-    res.status(500).send(err.message);
+    res.status(401).send(err.message);
 })
 
 

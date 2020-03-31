@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
-    "express-async-error": "0.0.2"
+    "express-async-error": "0.0.2",
+    "jsonwebtoken": "^8.5.1"
   }
 }
