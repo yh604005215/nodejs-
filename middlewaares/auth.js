@@ -17,6 +17,7 @@ module.exports = (req, res, next) => {
                 res.status(401).send('身份校验失败');
             } else{
                 //校验成功
+                req.auth = data;
                 next();
             }
         });

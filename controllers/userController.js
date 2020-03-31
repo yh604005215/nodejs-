@@ -30,7 +30,7 @@ exports.login = async (req,res) => {
     //生成token
     const token =jsonwebtoken.sign({
         //将一些用户角色信息 用户id、和一些不敏感的信息传入,不要写太多
-        userId:data._id,
+        userID:data._id,
         nickname:data.nickname
     },"hao",{
         expiresIn: "2h"

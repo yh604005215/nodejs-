@@ -25,9 +25,16 @@ exports.index = async (req, res) => {
 
 //创建帖子
 exports.create = async (req, res) => {
-    const {title, content} = req.body;
-
-    await PostModel.create({title, content});
+    //取出req.auth中的userId
+    console.log(req.auth);
+    
+    const {userId} = req.auth;
+    console.log(userId);
+    
+    req.body.userId = userId;
+    console.log(req.body);
+    
+    await PostModel.create(req.body);
     res.send({code: 0, msg: "成功"});   
 };
 
