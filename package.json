@@ -26,6 +26,7 @@
     "mongoose": "^5.9.6"
   },
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "express-async-error": "0.0.2"
   }
 }
