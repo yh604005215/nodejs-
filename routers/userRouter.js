@@ -6,7 +6,6 @@ const router = express.Router();
 
 /**  
  * @api {post} http://localhost:3000/register 注册
- * @apiName register
  * @apiGroup user
  *
  * @apiParam {String} email 用户邮箱
@@ -19,6 +18,19 @@ const router = express.Router();
 
 router.post('/register',register);
 
+
+
+/**  
+ * @api {post} http://localhost:3000/login 登录 
+ * @apiGroup user
+ *
+ * @apiParam {String} email 用户邮箱
+ * @apiParam {String} password  用户密码
+ *
+ *
+ * @apiSuccess {Number} code  错误状态码
+ * @apiSuccess {String} msg 错误消息
+*/
 router.post('/login',login);
 
 module.exports = router;

@@ -35,7 +35,11 @@ userSchema.pre('save', function (next){
     this.password = bcryptjs.hashSync(this.password,10);
     next();
 });
-
+//给 UserModel 的实例 （document）用户添加一个实例方法
+userSchema.methods.comparePassword = function (password){
+    //bcryptjs.compareSync(原密码,加密后的密码);
+    return bcryptjs.compareSync(password,this.password);
+}
 
 const UserModel = mongoose.model('user', userSchema);
 

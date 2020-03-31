@@ -18,11 +18,16 @@ exports.register = async (req,res) => {
 exports.login = async (req,res) => {
     //获取前端传递过来的email与password
     const {email,password} = req.body;
+
     //查询数据库，email 与 password 能否与数据库中的数据匹配
-    const data = await UserModel.findOne({email,password});
-    if(!data) {
+    const data = await UserModel.findOne({email});
+     //校验密码是否正确 bcryptjs
+     
+     
+    if(!data || !data.comparePassword(password)) {
         res.send({code: -1, msg:"用户邮箱或密码不正确"});
         return;
     }
+    
     res.send({code: 0, msg: "登录成功", data});
 }
