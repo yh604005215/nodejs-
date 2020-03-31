@@ -174,6 +174,19 @@ define({ "api": [
     "title": "删除帖子",
     "name": "remove",
     "group": "Post",
+    "parameter": {
+      "fields": {
+        "Headers": [
+          {
+            "group": "Headers",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>token</p>"
+          }
+        ]
+      }
+    },
     "success": {
       "fields": {
         "Success 200": [
@@ -220,6 +233,15 @@ define({ "api": [
             "optional": false,
             "field": "content",
             "description": "<p>帖子内容</p>"
+          }
+        ],
+        "Headers": [
+          {
+            "group": "Headers",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>token</p>"
           }
         ]
       }

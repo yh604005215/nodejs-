@@ -51,13 +51,13 @@ router.post('/', auth, create);
  *
  * @apiParam {String} title 帖子标题
  * @apiParam {String} content  帖子内容
- *
+ * @apiParam (Headers) {String} Authorization token
  * @apiSuccess {Number} code  错误状态码
  * @apiSuccess {String} msg 错误消息
 */
 
 // PUT / posts/:id
-router.put('/:id', update);
+router.put('/:id', auth,update);
 
 
 /**
@@ -65,13 +65,13 @@ router.put('/:id', update);
  * @apiName remove
  * @apiGroup Post
  *
- *
+ * @apiParam (Headers) {String} Authorization token
  * @apiSuccess {Number} code  错误状态码
  * @apiSuccess {String} msg 错误消息
 */
 
 //DELETE /posts/:id
-router.delete('/:id', remove);
+router.delete('/:id', auth, remove);
 
 
 /**
