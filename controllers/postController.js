@@ -1,7 +1,7 @@
 //帖子的控制器，暴露一系列的中间件方法给到帖子的路由去使用
 //引入 PostModel
 const PostModel = require('../models/postModel');
-const jsonwebtoken = require('jsonwebtoken');
+
 // 查询帖子列表
 exports.index = async (req, res) => {
     // 获取前端传递过来分页的数据 pageNum、pageSize 
@@ -25,35 +25,10 @@ exports.index = async (req, res) => {
 
 //创建帖子
 exports.create = async (req, res) => {
-    /*
-        验证token是否存在并有效
-        1. 获取传递过来的token query ? body ? param ? 都不行需要从请求头中获取。
-        2. 判断token是否存在
-    */
-    const token = req.get('Authorization');
-    if(token) {
-        //存在,然后校验token
-        jsonwebtoken.verify(token, 'hao', async (err,data) => {
-            if(err) {   
-                //校验失败
-                res.status(401).send('身份校验失败');
-            } else{
-                //校验成功
-                //获取前端传递过来的参数
-                const {title, content} = req.body;
-                await PostModel.create({title, content});
-                res.send({code: 0, msg: "成功"});
-            }
-        });
+    const {title, content} = req.body;
 
-    }else {
-        //不存在
-        res.status(401).send('需要token');
-        return;
-    }
-
-   
-   
+    await PostModel.create({title, content});
+    res.send({code: 0, msg: "成功"});   
 };
 
 //更新帖子

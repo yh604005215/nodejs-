@@ -7,6 +7,7 @@ const express = require('express');
 const router = express.Router();
 //引入 postController
 const {index,create,update,remove,show} = require('../controllers/postController');
+const auth = require('../middlewaares/auth');
 
 
 /**
@@ -34,12 +35,13 @@ router.get('/', index);
  *
  * @apiParam {String} title 帖子标题
  * @apiParam {String} content  帖子内容
+ * @apiParam (Headers) {String} Authorization token
  *
  * @apiSuccess {Number} code  错误状态码
  * @apiSuccess {String} msg 错误消息
 */
 //POST / posts
-router.post('/', create);
+router.post('/', auth, create);
 
 
 /**
