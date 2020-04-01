@@ -54,7 +54,7 @@ router.get('/getInfo', auth, getInfo);
 
 
 /**  
- * @api {put} http://localhost:3000/getInfo 修改当前用户信息
+ * @api {put} http://localhost:3000/users/update 修改当前用户信息
  * @apiGroup user
  *
  *

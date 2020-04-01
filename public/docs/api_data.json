@@ -436,7 +436,7 @@
   },
   {
     "type": "put",
-    "url": "http://localhost:3000/getInfo",
+    "url": "http://localhost:3000/users/update",
     "title": "修改当前用户信息",
     "group": "user",
     "parameter": {
@@ -482,6 +482,6 @@
     "version": "0.0.0",
     "filename": "routers/userRouter.js",
     "groupTitle": "user",
-    "name": "PutHttpLocalhost3000Getinfo"
+    "name": "PutHttpLocalhost3000UsersUpdate"
   }
 ]

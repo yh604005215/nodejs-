@@ -72,7 +72,8 @@ exports.update = async  (req,res) => {
         updateData.avatar = `http://localhost:3000/${newFilename}`;
     }
     //修改数据库
-    const data = await UserModel.updateOne({_id: userId}, updateData);
+    await UserModel.updateOne({_id: userId}, updateData);
+    const data = await UserModel.findOne({_id: userId}, {password:0});
     //响应
     res.send({code:0,msg:"成功",data});
 }

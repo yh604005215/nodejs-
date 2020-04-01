@@ -14,8 +14,6 @@ async function renderNavbar (){
     if(Cookies.get('token')){
       let res = await getUserInfo();
 
-
-
         html = `
         <li class="nav-item">
         <a href="/post/create.html" class="nav-link">
@@ -24,7 +22,7 @@ async function renderNavbar (){
       </li>
       <li class="nav-item dropdown">
         <a href="javascript:;" class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown">
-          <img src="/assets/img/avatar.png" class="rounded" width="30" height="30" alt="" />
+          <img src="${res.data.avatar}" class="rounded" width="30" height="30" alt="" />
         </a>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
           <a class="dropdown-item" href="/user/settings/profile/edit.html">Profile</a>
