@@ -1,6 +1,6 @@
 const express = require('express');
 const multer = require('multer');
-const {register,login,getInfo,update} = require('../controllers/userController');
+const {register,login,getInfo,update,upPassword} = require('../controllers/userController');
 const router = express.Router();
 const auth = require('../middlewaares/auth');
 const upload = multer({
@@ -65,4 +65,24 @@ router.get('/getInfo', auth, getInfo);
 */
 
 router.put('/users/update', auth, upload.single('avatar'), update);
+
+
+/**  
+ * @api {post} http://localhost:3000/users/uppassword 修改密码
+ * @apiGroup user
+ *
+ *  @apiParam {String} password  用户密码
+ *  @apiParam {String} userId  用户id
+ *  @apiParam (Headers) {String} Authorization token
+ *  @apiSuccess {Number} code  错误状态码
+ *   @apiSuccess {String} msg 错误消息
+ * 
+*/
+
+router.post('/users/uppassword',auth, upPassword);
+
+
+
+
+
 module.exports = router;
