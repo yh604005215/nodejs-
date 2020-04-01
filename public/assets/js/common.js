@@ -1,16 +1,21 @@
 $(function() {
-   
+    
     renderNavbar();
+   
 }) 
 
 
 
 
-function renderNavbar (){
+async function renderNavbar (){
      //判断是否在登录状态
     //登录成功之后将 token 信息写入cookie 中 从cookie中获取 token 来判断是否登录
     var html = '';
     if(Cookies.get('token')){
+      let res = await getUserInfo();
+
+
+
         html = `
         <li class="nav-item">
         <a href="/post/create.html" class="nav-link">
@@ -64,4 +69,39 @@ function needLogin(){
         alert(('需要登录'));
         location.href = '/login.html';
     }
+}
+
+function getID(){
+  // 获取当前的帖子Id
+  var href = window.location.href;
+  var str = href.split("?")[1]; // id=5e816310fd4d26171c5cf47d&asdfas=adsfasdf
+  // 判断 str 是否存在
+  if (!str) {
+    alert("请注意查看是否携带有id");
+    return;
+  }
+  var arr = str.split("&");
+  var result = {};
+  arr.forEach(item => {
+    var tmp = item.split("=");
+    result[tmp[0]] = tmp[1];
+  });
+  return result;
+}
+
+
+function getUserInfo() {
+  return  new  Promise((resolve, reject) =>{
+    $.ajax({
+      url:'http://localhost:3000/getInfo',
+      type:'get',
+      headers:  {
+        Authorization:  Cookies.get('token')
+      },
+      success: function(data){
+       resolve(data);     
+      }
+    });
+  })
+  
 }

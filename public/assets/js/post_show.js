@@ -1,20 +1,7 @@
 $(function() {
-  // 获取当前的帖子Id
-  var href = window.location.href;
-  var str = href.split("?")[1]; // id=5e816310fd4d26171c5cf47d&asdfas=adsfasdf
-  // 判断 str 是否存在
-  if (!str) {
-    alert("请注意查看是否携带有id");
-    return;
-  }
-  var arr = str.split("&");
-  var result = {};
-  arr.forEach(item => {
-    var tmp = item.split("=");
-    result[tmp[0]] = tmp[1];
-  });
+    var result = getID();
 
-  console.log(result.id);
+ 
 
   // 直接发送ajax请求获取详情数据
   var url = `http://localhost:3000/posts/${result.id}`;
@@ -31,10 +18,10 @@ $(function() {
        
           <ul class="nav justify-content-end">
             <li class="nav-item">
-              <a href="./edit.html" class="nav-link btn btn-link">Edit</a>
+              <a href="./edit.html?id=${result.id}" class="nav-link btn btn-link" id="edit">Edit</a>
             </li>
             <li class="nav-item">
-              <a href="javascript:;" class="nav-link btn btn-link delete" id='${data._id}'>Delete</a>
+              <a href="javascript:;" class="nav-link btn btn-link delete">Delete</a>
             </li>
           </ul>
         </div>
@@ -44,7 +31,15 @@ $(function() {
   });
 
   $('#posts').on('click','.delete',function (){
-    let url = 'http://localhost:3000/posts/' + $(this).attr('id');
+
+    if(!isLogined()){
+      alert('需要登录');
+      return;
+    }
+
+    if(!confirm('确认删除吗')) return;
+
+    let url = 'http://localhost:3000/posts/' + result.id;
     $.ajax({
       type:"delete",
       url,

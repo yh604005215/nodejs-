@@ -22,7 +22,8 @@ const userSchema = new mongoose.Schema({
     //用户昵称设置默认没空
     nickname:{ type:String,
         default:""
-    }
+    },
+    avatar:{ type: String, default: 'http://localhost:3000/assets/img/avatar.png'}
 },{
     timestamps: true
 });

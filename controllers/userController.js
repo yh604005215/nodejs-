@@ -1,4 +1,6 @@
 const UserModel = require('../models/userModel');
+const path = require('path');
+const fs = require('fs');
 const jsonwebtoken = require('jsonwebtoken');
 
 exports.register = async (req,res) => {
@@ -36,4 +38,41 @@ exports.login = async (req,res) => {
         expiresIn: "2h"
     });
     res.send({code: 0, msg: "登录成功", token});
+}
+
+exports.getInfo = async (req,res) => {
+    //获取用户id，通过req.auth
+    const {userId} = req.auth;
+    //查询数据库
+    const data  = await UserModel.findOne({_id:userId},{password:0});
+
+    //响应
+    res.send({code:0,msg:"成功",data});
+}
+
+exports.update = async  (req,res) => {
+    //获取用户id
+    const {userId} = req.auth;
+    //定义一个后续修改的对象
+    let updateData = {};
+    //判断是否有传递头像过来
+    if(req.file.path)  {
+        //获取头像
+        //定义newFilename  与 newFilePath
+        const newFilename = `${req.file.filename}-${req.file.originalname}`;
+        const newFilepath = path.resolve(__dirname, "../public",newFilename);
+
+        //读文件
+        const fileData = fs.readFileSync(req.file.path);
+
+        //写文件
+        fs.writeFileSync(newFilepath,fileData);
+
+        //给updateData  中设置  avatar
+        updateData.avatar = `http://localhost:3000/${newFilename}`;
+    }
+    //修改数据库
+    const data = await UserModel.updateOne({_id: userId}, updateData);
+    //响应
+    res.send({code:0,msg:"成功",data});
 }
