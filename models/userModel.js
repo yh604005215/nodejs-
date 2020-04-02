@@ -36,6 +36,16 @@ userSchema.pre('save', function (next){
     this.password = bcryptjs.hashSync(this.password,10);
     next();
 });
+
+//更新密码钩子函数
+userSchema.pre('updateOne', function (next){
+    //对this.password加密之后，再赋值
+    if(this._update.password){
+        this._update.password = bcryptjs.hashSync(this._update.password);
+    }
+    next();
+});
+
 //给 UserModel 的实例 （document）用户添加一个实例方法
 userSchema.methods.comparePassword = function (password){
     //bcryptjs.compareSync(原密码,加密后的密码);

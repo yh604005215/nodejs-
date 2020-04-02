@@ -1,7 +1,7 @@
 const UserModel = require('../models/userModel');
 const path = require('path');
 const fs = require('fs');
-const bcryptjs = require('bcryptjs');
+
 const jsonwebtoken = require('jsonwebtoken');
 
 exports.register = async (req,res) => {
@@ -16,6 +16,7 @@ exports.register = async (req,res) => {
     }
     //不存在，运行注册
     await UserModel.create(req.body);
+  
     res.send({code: 0, msg:"注册成功"});
 }
 exports.login = async (req,res) => {
@@ -82,9 +83,7 @@ exports.update = async  (req,res) => {
 
 exports.upPassword = async (req,res) => {
     //获取前端传递过来的email与password
-    let {userId,password,newPassword} = req.body;
-    
-    newPassword = bcryptjs.hashSync(newPassword,10);
+    const {userId,password,newPassword} = req.body;
 
     //查询数据库，email 与 password 能否与数据库中的数据匹配
     const data = await UserModel.findOne({_id:userId});
