@@ -1,6 +1,7 @@
 //引入 express
 const express = require('express');
 //引入 express-async-error
+require('dotenv').config();
 require('express-async-errors');
 //引入抽离出去的路由文件
 const postRouter = require('./routers/postRouter');

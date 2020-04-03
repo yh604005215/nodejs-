@@ -23,7 +23,7 @@ const userSchema = new mongoose.Schema({
     nickname:{ type:String,
         default:""
     },
-    avatar:{ type: String, default: 'http://localhost:3000/assets/img/avatar.png'}
+    avatar:{ type: String, default: `${process.env.BASEURL}/assets/img/avatar.png`}
 },{
     timestamps: true
 });
