@@ -1,4 +1,6 @@
 $(function() {
+    let ms = 300;
+    let timer;
     $('#register-btn').on('click', function(){
         $.ajax({
             type:'post',
@@ -22,6 +24,8 @@ $(function() {
     });
 
     $('#code-btn').click(function(){
+        clearInterval(timer);
+        countDown();
         $.ajax({
             type:'post',
             url:'/emailCode',
@@ -37,5 +41,28 @@ $(function() {
         
             }
         })
-    })
+    });
+
+    function countDown(){
+        if(Cookies.get('time')){
+            $('#code-btn').css(`background`,'#333');
+            ms = Cookies.get('time');
+            timer = setInterval(()=>{
+                if(ms <= 0){
+                    Cookies.remove('time');
+                    $('#code-btn').text(`发送`);
+                    $('#code-btn').css(`background`,'#007bff');
+                    clearInterval(timer);
+                    return;
+                }
+                
+                ms--;
+                Cookies.set('time',ms);
+                $('#code-btn').text(ms);
+            },1000)
+        } else{
+            Cookies.set('time',ms);
+        }
+    }
+    countDown();
 });
