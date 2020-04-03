@@ -4,7 +4,7 @@ $(function() {
  
 
   // 直接发送ajax请求获取详情数据
-  var url = `http://localhost:3000/posts/${result.id}`;
+  var url = `/posts/${result.id}`;
   $.get(url, function(res) {
     if (res.code === 0) {
       var data = res.data;
@@ -39,7 +39,7 @@ $(function() {
 
     if(!confirm('确认删除吗')) return;
 
-    let url = 'http://localhost:3000/posts/' + result.id;
+    let url = '/posts/' + result.id;
     $.ajax({
       type:"delete",
       url,
@@ -50,11 +50,12 @@ $(function() {
       success: function (res){
         if(res.code === 0){
           alert('删除成功');
-          location.href = 'http://localhost:3000/post/index.html';
+          location.href = '/post/index.html';
         }
       },
-      error: function (msg){
-        console.log(msg);
+      error: function(msg){
+          alert(msg);
+          location.href = '/login.html';
       }
     })
   })

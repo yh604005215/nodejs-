@@ -1,14 +1,34 @@
 const UserModel = require('../models/userModel');
 const path = require('path');
 const fs = require('fs');
-
+const mail = require('../confug/mail');
 const jsonwebtoken = require('jsonwebtoken');
+let codes = {};
+function randomNum(min, max){
+    var tmp = max - min + 1;
+    return parseInt(Math.random() * tmp) + min
+}
 
 exports.register = async (req,res) => {
     //获取email
-    const {email} = req.body;
+    const {email,eCode,time} = req.body;
     //判断是否已经注册过，做一个查询操作
     const data = await UserModel.findOne({email});
+    if(!codes[email]){
+        res.send({code: -1, msg: "请发送验证码"});
+        return;
+    }
+    if(parseInt(time) > codes[email].cTime){
+        res.send({code: -1, msg: "验证码有效期已过"});
+        return;
+    }
+    console.log(codes[email].eCode);
+    console.log(parseInt(eCode));
+    
+    if(parseInt(eCode) !== codes[email].eCode){
+        res.send({code: -1, msg: "验证码错误"});
+        return;
+    }
     if(data) {
         //存在，不在允许注册
         res.send({code: -1, msg: "用户已注册"});
@@ -19,6 +39,44 @@ exports.register = async (req,res) => {
   
     res.send({code: 0, msg:"注册成功"});
 }
+
+exports.emailCode = async (req,res) => {
+    const rule = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+    const {email,time} = req.body;
+    console.log(codes[email]);
+
+    if(codes[email] &&  codes[email].cTime > time){
+        res.send({code: -1, msg: "5分钟内不能重发"});
+        return;
+    }   
+    
+    const data = await UserModel.findOne({email});
+    if(data){
+        //存在，不在允许注册
+        res.send({code: -1, msg: "用户已注册"});
+        return;
+    }
+    if(!email){
+        res.send({code: -1, msg:"邮箱不能为空"});
+        return;
+    }
+    if(!rule.test(email)){
+        res.send({code: -1, msg:"请输入正确邮箱"});
+        return;
+    }
+
+    let eCode = randomNum(100000, 999999);
+    mail.send(email,eCode);
+    console.log(eCode);
+    
+    let cTime = new Date().getTime() + 300000;
+    codes[email] = {eCode,cTime};
+    
+    res.send({code:0, msg:"发送成功"});
+    
+    
+}
+
 exports.login = async (req,res) => {
     //获取前端传递过来的email与password
     const {email,password} = req.body;
@@ -36,9 +94,7 @@ exports.login = async (req,res) => {
         //将一些用户角色信息 用户id、和一些不敏感的信息传入,不要写太多
         userId:data._id,
         nickname:data.nickname
-    },"hao",{
-        expiresIn: "2h"
-    });
+    },"hao");
     res.send({code: 0, msg: "登录成功", token});
 }
 
@@ -98,3 +154,4 @@ exports.upPassword = async (req,res) => {
     
     res.send({code: 0, msg: "修改成功"});
 }
+

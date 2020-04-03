@@ -91,7 +91,7 @@ function getID(){
 function getUserInfo() {
   return  new  Promise((resolve, reject) =>{
     $.ajax({
-      url:'http://localhost:3000/getInfo',
+      url:'/getInfo',
       type:'get',
       headers:  {
         Authorization:  Cookies.get('token')
@@ -102,4 +102,10 @@ function getUserInfo() {
     });
   })
   
+}
+
+
+function getNowTime(){
+  let time = new Date().getTime();
+  return  time;
 }

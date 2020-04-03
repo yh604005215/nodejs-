@@ -1,6 +1,6 @@
 const express = require('express');
 const multer = require('multer');
-const {register,login,getInfo,update,upPassword} = require('../controllers/userController');
+const {register,login,getInfo,update,upPassword,emailCode} = require('../controllers/userController');
 const router = express.Router();
 const auth = require('../middlewaares/auth');
 const upload = multer({
@@ -14,8 +14,10 @@ const upload = multer({
  *
  * @apiParam {String} email 用户邮箱
  * @apiParam {String} password  用户密码
- * @apiParam {String} nickname  用户密码<可选>
- *
+ * @apiParam {String} nickname  用户昵称<可选>
+ * @apiParam {String} eCode 邮箱验证码 \
+ * @apiParam {String} time 时间戳
+ * 
  * @apiSuccess {Number} code  错误状态码
  * @apiSuccess {String} msg 错误消息
 */
@@ -23,6 +25,17 @@ const upload = multer({
 router.post('/register',register);
 
 
+/**  
+ * @api {post} http://localhost:3000/emailCode 邮箱验证码
+ * @apiGroup user
+ *
+ * @apiParam {String} email 用户邮箱
+ *  @apiParam {String} time 时间戳
+ * @apiSuccess {Number} code  错误状态码
+ * @apiSuccess {String} msg 错误消息
+*/
+
+router.post('/emailCode',emailCode);
 
 /**  
  * @api {post} http://localhost:3000/login 登录 

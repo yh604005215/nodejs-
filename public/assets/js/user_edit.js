@@ -14,7 +14,7 @@ $(function(){
         let formData  = new FormData();
         formData.append('avatar',$('#myfile')[0].files[0]);
         $.ajax({
-            url: 'http://localhost:3000/users/update',
+            url: '/users/update',
             type:'put',
             data:formData,
             headers:{

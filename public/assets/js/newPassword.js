@@ -6,7 +6,7 @@ $(function(){
         
 
         $.ajax({
-            url:'http://localhost:3000/users/uppassword',
+            url:'/users/uppassword',
             type:"post",
             data: {
                 userId:res.data._id,
@@ -20,7 +20,7 @@ $(function(){
                 if(res.code === 0){
                     alert('修改成功');
                     Cookies.remove('token');
-                    location.href = 'http://localhost:3000/login.html';
+                    location.href = '/login.html';
                     return;
                 }
                 alert(res.msg);

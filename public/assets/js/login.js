@@ -3,7 +3,7 @@ $(function() {
 
         $.ajax({
             type:'post',
-            url:'http://localhost:3000/login',
+            url:'/login',
             data:{
                 email:$('#inputEmail').val(),
                 password:$('#inputPassword').val()
