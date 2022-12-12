@@ -21,7 +21,7 @@
   "homepage": "https://github.com/yh604005215/nodejs-#readme",
   "devDependencies": {
     "apidoc": "^0.20.1",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "express-async-errors": "^3.1.1",
     "mongoose": "^5.9.6",
     "multer": "^1.4.2",
